@@ -1,0 +1,40 @@
+#include "grid.h"
+
+void debug (char matrice[NBL][NBC+1]){
+    int i,j;
+    for (i=0; i<NBL; i++){
+        for (j=0; j<NBC; j++){
+            printf("%c ", matrice[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+int compute_size (int w, int h){
+    int a=1;
+    while (w >= NBC*a && h >= NBL*a){
+        a++;
+    }
+    return a;
+}
+
+void draw_grid(char matrice[NBL][NBC+1]){
+    int h = MLV_get_window_height();
+    int w = MLV_get_window_width();
+    int a = compute_size(w,h);
+
+    int i,j;
+    for (i=0; i<NBL; i++){
+        for (j=0; j<NBC; j++){
+            if (matrice[i][j] == WALL){
+                MLV_draw_filled_rectangle(j*a, i*a, a, a, MLV_COLOR_BLACK);
+            }
+            else if (matrice[i][j] == EMPTY){
+                MLV_draw_filled_rectangle(j*a, i*a, a, a, MLV_COLOR_WHITE);
+            }
+            else if (matrice[i][j] == FRUIT){
+                MLV_draw_filled_rectangle(j*a, i*a, a, a, MLV_COLOR_RED);
+            }
+        }
+    }
+}
